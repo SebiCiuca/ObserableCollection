@@ -1,0 +1,16 @@
+﻿<reactiveui:ReactiveWindow 
+        x:Class="ObserableCollection.MainWindow"  
+        xmlns:local="clr-namespace:ObserableCollection"
+        x:TypeArguments="local:MainWindowViewModel"  
+        xmlns:reactiveui="http://reactiveui.net"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="RandomButton" Content="RandomFromList" HorizontalAlignment="Left" Margin="356,180,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</reactiveui:ReactiveWindow>
