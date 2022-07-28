@@ -1,14 +1,18 @@
-﻿using ReactiveUI;
+﻿using DynamicData;
+using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Disposables;
 
 namespace ObserableCollection
 {
     public class RandomService : ReactiveObject, IRandomService
     {
-        private List<RandomModel> _privateList; 
+        private List<RandomModel> _privateList;
+        private readonly SourceList<RandomModel> _items = new SourceList<RandomModel>();
         public RandomService()
         {
             _privateList = new List<RandomModel>
@@ -18,25 +22,21 @@ namespace ObserableCollection
                 new RandomModel { Id = 3, Name = "SecondRandom" },
                 new RandomModel { Id = 4, Name = "SecondRandom" }
             };
-            _modelList = new();
         }
-        private ObservableCollection<RandomModel> _modelList;
-        public ObservableCollection<RandomModel> ModelList
-        {
-            get => _modelList;
-            set => this.RaiseAndSetIfChanged(ref _modelList, value);
-        }
-
         public void UpdateList(int take)
         {
-            _modelList.Clear();
-            Debug.WriteLine($"ModelList count {_modelList.Count}");
+            _items.Clear();
+            Debug.WriteLine($"ModelList count {_items.Count}");
 
             var addToUI = _privateList.Take(take).ToList();
-            addToUI.Shuffle();
 
-            _privateList.ForEach(p => ModelList.Add(p));
-            Debug.WriteLine($"ModelList count {_modelList.Count}");
+            addToUI.ForEach(p => _items.Add(p));
+            Debug.WriteLine($"ModelList count {_items.Count}");
+        }
+
+        public IObservable<IChangeSet<RandomModel>> ConnectList()
+        {
+            return _items.Connect();
         }
     }
 }

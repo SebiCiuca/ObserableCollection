@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:ObserableCollection"
              Startup="Application_Startup">
     <Application.Resources>
-         
+
+        <ResourceDictionary Source="pack://application:,,,/LineDesigner/LineTemplate.xaml"/>
     </Application.Resources>
 </Application>

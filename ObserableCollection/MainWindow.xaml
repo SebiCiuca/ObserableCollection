@@ -9,8 +9,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <!--<Grid>
         <Button x:Name="RandomButton" Content="RandomFromList" HorizontalAlignment="Left" Margin="356,180,0,0" VerticalAlignment="Top"/>
-
+        
+    </Grid>-->
+    <Grid>
+        <Image x:Name="Image" Grid.Column="0" Grid.Row="0" Source="EBIRCH.tif"></Image>
+        <Canvas 
+            x:Name="DrawingCanvas"
+            Grid.Column="0" 
+            Grid.Row="0" 
+            Background="Transparent" 
+            Height="{Binding ActualHeight, ElementName=Image}"
+            Width="{Binding ActualWidth, ElementName=Image}">            
+        </Canvas>
     </Grid>
 </reactiveui:ReactiveWindow>

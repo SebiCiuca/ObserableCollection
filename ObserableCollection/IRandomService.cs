@@ -1,11 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿using DynamicData;
+using System;
 
 namespace ObserableCollection
 {
     public interface IRandomService
     {
-        ObservableCollection<RandomModel> ModelList { get; }
-
         void UpdateList(int take);
+
+        IObservable<IChangeSet<RandomModel>> ConnectList();
     }
 }

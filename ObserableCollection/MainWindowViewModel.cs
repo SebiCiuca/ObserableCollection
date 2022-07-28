@@ -1,6 +1,8 @@
-﻿using ReactiveUI;
+﻿using DynamicData;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -12,13 +14,16 @@ namespace ObserableCollection
         private readonly IRandomService m_RandomService;
         public ReactiveCommand<Unit, Unit> RandonListCommand { get; set; }
 
+        private readonly ReadOnlyObservableCollection<RandomModel> _items;
+
         public MainWindowViewModel(IRandomService randomService)
         {
             m_RandomService = randomService;
 
             RandonListCommand = ReactiveCommand.Create(() => { CallRandomService(); });
 
-            randomService.WhenAnyValue(rs => rs.ModelList).WhereNotNull().Subscribe(_ => TriggerUpdateUI());
+            //randomService.ConnectList().Transform(cl => cl).ObserveOn(RxApp.MainThreadScheduler).Bind(out _items).Subscribe(_ => TriggerUpdateUI());
+            randomService.ConnectList().ObserveOn(RxApp.MainThreadScheduler).Bind(out _items).Subscribe(_ => TriggerUpdateUI());
         }
 
         private void CallRandomService()
@@ -33,7 +38,7 @@ namespace ObserableCollection
         private void TriggerUpdateUI()
         {
             Debug.WriteLine("List changed");
-            foreach (var model in m_RandomService.ModelList)
+            foreach (var model in _items)
             {
                 Debug.WriteLine($"{model.Id} {model.Name}");
             }
